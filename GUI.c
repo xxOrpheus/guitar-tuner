@@ -17,8 +17,19 @@ void* processGUI(void *arg)
 {
     if(currentString > 0)
     {
-        generateTone(stringNoToFreq(currentString), toneLength, loopPlayback);
-        currentString = -1;
+        if(loopPlayback)
+        {
+            while(loopPlayback)
+            {
+                generateTone(stringNoToFreq(currentString), toneLength);
+                Sleep(1000);
+            }
+        }
+        else
+        {
+            generateTone(stringNoToFreq(currentString), toneLength);
+            currentString = -1;
+        }
     }
 }
 
@@ -44,7 +55,10 @@ float getFrequency(HWND hwnd, int ctrlid)
 {
     char *e;
     double freq;
-    freq = strtod(getText(hwnd, ctrlid), &e);
+    char *text;
+    text = getText(hwnd, ctrlid);
+    freq = strtod(text, &e);
+    GlobalFree((HANDLE) text);
     if(*e != '\0')
     {
         printf("bad frequency data\n");
@@ -125,6 +139,7 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
             break;
 
         case ID_CYCLENEXT:
+            stopTone();
             cycleString += 1;
             if(cycleString < 1)
             {
@@ -139,6 +154,7 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
             break;
 
         case ID_CYCLEPREV:
+            stopTone();
             cycleString -= 1;
             if(cycleString < 1)
             {
@@ -149,6 +165,8 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
             break;
 
         case ID_LOOP_PLAYBACK:
+            currentString = -1;
+            stopTone();
             if(HIWORD(wParam) == BN_CLICKED)
             {
                 if(SendDlgItemMessage(hwnd, ID_LOOP_PLAYBACK, BM_GETCHECK, 0, 0))
@@ -166,11 +184,14 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
 
         case ID_STOP:
             currentString = -1;
-            //  loopPlayback = FALSE;
+            loopPlayback = FALSE;
             stopTone();
             break;
 
         case ID_SET_TUNING:
+            currentString = -1;
+            loopPlayback = FALSE;
+            stopTone();
             tune = getTuning();
             tune.STRING_1_FREQ = getFrequency(hwnd, ID_FREQ_1);
             tune.STRING_2_FREQ = getFrequency(hwnd, ID_FREQ_2);

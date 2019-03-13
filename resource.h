@@ -34,7 +34,6 @@
 #define ID_TIME_MS                              40026
 #define ID_APP_ICON                             40027
 #define ID_SET_TUNING                           40028
-#define ID_APP_LOGO                             40029
 #define AUDIO_VOLUME 127
 #define AUDIO_FREQ 48000
 #define AUDIO_SAMPLES 4096

@@ -24,7 +24,7 @@ void populate(void* data, Uint8 *stream, int len)
     }
 }
 
-int generateTone(long freq, DWORD len, BOOL loop)
+int generateTone(long freq, DWORD len)
 {
 
     SDL_AudioSpec spec;
@@ -44,24 +44,15 @@ int generateTone(long freq, DWORD len, BOOL loop)
 
     sinPos = 0;
     sinStep = 2 * M_PI * freq / AUDIO_FREQ;
-    if(loop) {
-        while(loop) {
-            SDL_PauseAudio(0);
-            Sleep(len);
-            //SDL_Delay(2500);
-            SDL_PauseAudio(1);
-            Sleep(1000);
-        }
-    } else {
+
         SDL_PauseAudio(0);
         Sleep(len);
         SDL_PauseAudio(1);
-    }
+   // }
     SDL_CloseAudio();
     return 0;
 }
 
 int stopTone() {
-    SDL_PauseAudio(1);
     SDL_CloseAudio();
 }

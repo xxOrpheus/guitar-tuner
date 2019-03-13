@@ -153,7 +153,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     dropDTuning.name = "Drop D";
     dropDTuning.STRING_6_FREQ /= 1.0595,
 
-    setTuning(eFlatTuning);
+    setTuning(standardTuning);
 
     while((ret = GetMessage(&Msg, NULL, 0, 0) > 0))
     {
