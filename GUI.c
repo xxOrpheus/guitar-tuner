@@ -40,12 +40,8 @@ char* getText(HWND hwnd, int ctrlid)
     {
         int i;
         char* buf;
-
         buf = (char*)GlobalAlloc(GPTR, buflen + 1);
         GetDlgItemText(hwnd, ctrlid, buf, buflen + 1);
-
-        //... do stuff with text ...
-        printf("%s \n", buf);
         return buf;
     }
 }
@@ -79,6 +75,12 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
         hwndTB = GetDlgItem(hwnd, ID_TONE_LENGTH);
         SendMessage(hwndTB, TBM_SETRANGE, TRUE, MAKELONG(1000, 5000));
         break;
+
+    case WM_NCHITTEST:
+        ReleaseCapture();
+        SendMessage(hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+        break;
+
     case WM_CLOSE:
         if(MessageBox(hwnd, TEXT("Really close?"), TEXT("Close?"), MB_ICONQUESTION | MB_YESNO) == IDYES)
         {
@@ -100,12 +102,9 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
         {
         case ID_TONE_LENGTH:
             toneLength = pos;
-            char timeMs[64];
+            char timeMs[32];
             sprintf(timeMs, "%d ms", toneLength);
             SetWindowText(textHwnd, timeMs);
-            break;
-        default:
-            printf("%d %d %d \n", ctrlId, requestId, pos);
             break;
         }
         break;
@@ -149,7 +148,6 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
             {
                 cycleString = 1;
             }
-            printf("%d string \n", cycleString);
             currentString = cycleString;
             break;
 
@@ -161,7 +159,6 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
                 cycleString = 6;
             }
             currentString = cycleString;
-            printf("%d string \n", cycleString);
             break;
 
         case ID_LOOP_PLAYBACK:
@@ -172,12 +169,10 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
                 if(SendDlgItemMessage(hwnd, ID_LOOP_PLAYBACK, BM_GETCHECK, 0, 0))
                 {
                     loopPlayback = TRUE;
-                    printf("playback will loop\n");
                 }
                 else
                 {
                     loopPlayback = FALSE;
-                    printf("playback will no longer loop\n");
                 }
             }
             break;
@@ -207,7 +202,7 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
             break;
 
         case ID_ABOUT:
-            MessageBeep(1);
+            MessageBeep(0);
             MessageBox(hwnd, "Made by David Harris", "Guitar Tuner v 1.0", MB_ICONQUESTION | MB_OK);
             break;
         }

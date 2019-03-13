@@ -38,21 +38,19 @@ int generateTone(long freq, DWORD len)
     if(SDL_OpenAudio(&spec, NULL) < 0)
     {
         printf("SDL Error: %s \n", SDL_GetError());
-      //  MessageBox(NULL, toneError, TEXT("Shit"), MB_ICONERROR | MB_OK);
-    //    return -1;
     }
 
     sinPos = 0;
     sinStep = 2 * M_PI * freq / AUDIO_FREQ;
 
-        SDL_PauseAudio(0);
-        Sleep(len);
-        SDL_PauseAudio(1);
-   // }
+    SDL_PauseAudio(0);
+    Sleep(len);
+    SDL_PauseAudio(1);
     SDL_CloseAudio();
     return 0;
 }
 
-int stopTone() {
+int stopTone()
+{
     SDL_CloseAudio();
 }
