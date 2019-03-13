@@ -8,3 +8,7 @@ typedef struct tuning
     float STRING_5_FREQ;
     float STRING_6_FREQ;
 } tuning;
+
+tuning standardTuning;
+tuning dropDTuning;
+tuning eFlatTuning;

@@ -29,15 +29,6 @@ BOOL loopPlayback = FALSE;
 
 tuning currentTuning;
 
-tuning standardTuning =
-{
-    "E Standard",
-    329.63, 246.94, 196, 146.83, 110, 82.41
-};
-
-tuning eFlatTuning;
-tuning dropDTuning;
-
 int setTuning(tuning tune)
 {
     float freq[] = {tune.STRING_1_FREQ, tune.STRING_2_FREQ, tune.STRING_3_FREQ, tune.STRING_4_FREQ, tune.STRING_5_FREQ, tune.STRING_6_FREQ};
@@ -132,20 +123,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     ShowWindow(hwnd, nCmdShow);
     UpdateWindow(hwnd);
 
-    eFlatTuning = standardTuning;
-    eFlatTuning.name = "Half-step Down";
-    eFlatTuning.STRING_1_FREQ /= 1.0595;
-    eFlatTuning.STRING_2_FREQ /= 1.0595;
-    eFlatTuning.STRING_3_FREQ /= 1.0595;
-    eFlatTuning.STRING_4_FREQ /= 1.0595;
-    eFlatTuning.STRING_5_FREQ /= 1.0595;
-    eFlatTuning.STRING_6_FREQ /= 1.0595;
-
     dropDTuning = standardTuning;
     dropDTuning.name = "Drop D";
-    dropDTuning.STRING_6_FREQ /= 1.0595,
+    dropDTuning.STRING_6_FREQ /= 1.0595;
 
-                                 setTuning(standardTuning);
+    setTuning(eFlatTuning);
 
     while((ret = GetMessage(&Msg, NULL, 0, 0) > 0))
     {
