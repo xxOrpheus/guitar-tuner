@@ -27,42 +27,34 @@ int cycleString = -1;
 int toneLength = 1000;
 BOOL loopPlayback = FALSE;
 
-struct tuning currentTuning;
+tuning currentTuning;
 
-struct tuning standardTuning =
+tuning standardTuning =
 {
     "E Standard",
     329.63, 246.94, 196, 146.83, 110, 82.41
 };
 
-struct tuning eFlatTuning;
-struct tuning dropDTuning;
+tuning eFlatTuning;
+tuning dropDTuning;
 
-int setTuning(struct tuning tune)
+int setTuning(tuning tune)
 {
-    char STRING_6_FREQ[128];
-    char STRING_5_FREQ[128];
-    char STRING_4_FREQ[128];
-    char STRING_3_FREQ[128];
-    char STRING_2_FREQ[128];
-    char STRING_1_FREQ[128];
-    sprintf(STRING_6_FREQ, "%.3f", tune.STRING_6_FREQ);
-    sprintf(STRING_5_FREQ, "%.3f", tune.STRING_5_FREQ);
-    sprintf(STRING_4_FREQ, "%.3f", tune.STRING_4_FREQ);
-    sprintf(STRING_3_FREQ, "%.3f", tune.STRING_3_FREQ);
-    sprintf(STRING_2_FREQ, "%.3f", tune.STRING_2_FREQ);
-    sprintf(STRING_1_FREQ, "%.3f", tune.STRING_1_FREQ);
-    SetDlgItemText(hwnd, ID_FREQ_6, STRING_6_FREQ);
-    SetDlgItemText(hwnd, ID_FREQ_5, STRING_5_FREQ);
-    SetDlgItemText(hwnd, ID_FREQ_4, STRING_4_FREQ);
-    SetDlgItemText(hwnd, ID_FREQ_3, STRING_3_FREQ);
-    SetDlgItemText(hwnd, ID_FREQ_2, STRING_2_FREQ);
-    SetDlgItemText(hwnd, ID_FREQ_1, STRING_1_FREQ);
+    float freq[] = {tune.STRING_1_FREQ, tune.STRING_2_FREQ, tune.STRING_3_FREQ, tune.STRING_4_FREQ, tune.STRING_5_FREQ, tune.STRING_6_FREQ};
+    int freqInput[] = {ID_FREQ_1, ID_FREQ_2, ID_FREQ_3, ID_FREQ_4, ID_FREQ_5, ID_FREQ_6};
+
+    for(int i = 0; i < 6; i++)
+    {
+        char freqs[64];
+        sprintf(freqs, "%.3f", freq[i]);
+        SetDlgItemText(hwnd, MAKEINTRESOURCE(freqInput[i]), freqs);
+    }
+
     currentTuning = tune;
     return 0;
 }
 
-struct tuning getTuning()
+tuning getTuning()
 {
     return currentTuning;
 }
@@ -153,7 +145,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     dropDTuning.name = "Drop D";
     dropDTuning.STRING_6_FREQ /= 1.0595,
 
-    setTuning(standardTuning);
+                                 setTuning(standardTuning);
 
     while((ret = GetMessage(&Msg, NULL, 0, 0) > 0))
     {
