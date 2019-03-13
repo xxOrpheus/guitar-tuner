@@ -47,7 +47,7 @@ char* getText(HWND hwnd, int ctrlid)
 }
 
 
-float getFrequency(HWND hwnd, int ctrlid)
+float getFrequencyByInput(HWND hwnd, int ctrlid)
 {
     char *e;
     double freq;
@@ -188,12 +188,12 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
             loopPlayback = FALSE;
             stopTone();
             tune = getTuning();
-            tune.STRING_1_FREQ = getFrequency(hwnd, ID_FREQ_1);
-            tune.STRING_2_FREQ = getFrequency(hwnd, ID_FREQ_2);
-            tune.STRING_3_FREQ = getFrequency(hwnd, ID_FREQ_3);
-            tune.STRING_4_FREQ = getFrequency(hwnd, ID_FREQ_4);
-            tune.STRING_5_FREQ = getFrequency(hwnd, ID_FREQ_5);
-            tune.STRING_6_FREQ = getFrequency(hwnd, ID_FREQ_6);
+            tune.STRING_1_FREQ = getFrequencyByInput(hwnd, ID_FREQ_1);
+            tune.STRING_2_FREQ = getFrequencyByInput(hwnd, ID_FREQ_2);
+            tune.STRING_3_FREQ = getFrequencyByInput(hwnd, ID_FREQ_3);
+            tune.STRING_4_FREQ = getFrequencyByInput(hwnd, ID_FREQ_4);
+            tune.STRING_5_FREQ = getFrequencyByInput(hwnd, ID_FREQ_5);
+            tune.STRING_6_FREQ = getFrequencyByInput(hwnd, ID_FREQ_6);
             setTuning(tune);
             break;
 

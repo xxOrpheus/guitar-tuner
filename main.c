@@ -21,7 +21,7 @@ WNDCLASSEX wc;
 HWND hwnd;
 MSG Msg;
 BOOL ret;
-long currFreq = 0;
+
 int currentString = -1;
 int cycleString = -1;
 int toneLength = 1000;
@@ -50,7 +50,7 @@ tuning getTuning()
     return currentTuning;
 }
 
-int stringNoToFreq(int stringNo)
+long stringNoToFreq(int stringNo)
 {
     switch(stringNo)
     {

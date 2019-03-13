@@ -24,7 +24,7 @@ void populate(void* data, Uint8 *stream, int len)
     }
 }
 
-int generateTone(long freq, DWORD len)
+int generateTone(long freq, int len)
 {
 
     SDL_AudioSpec spec;
@@ -53,4 +53,5 @@ int generateTone(long freq, DWORD len)
 int stopTone()
 {
     SDL_CloseAudio();
+    return 0;
 }

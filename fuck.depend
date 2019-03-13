@@ -401,7 +401,7 @@
 
 1552464234 c:\users\david\documents\programs\fuck\main.h
 
-1552486664 source:c:\users\david\documents\programs\guitar tuner\gui.c
+1552489223 source:c:\users\david\documents\programs\guitar tuner\gui.c
 	<windows.h>
 	<stdio.h>
 	<dos.h>
@@ -423,7 +423,7 @@
 
 1552472061 c:\users\david\documents\programs\guitar tuner\main.h
 
-1552488033 source:c:\users\david\documents\programs\guitar tuner\main.c
+1552488767 source:c:\users\david\documents\programs\guitar tuner\main.c
 	<windows.h>
 	<stdio.h>
 	<dos.h>
@@ -440,7 +440,7 @@
 
 1552465862 c:\users\david\documents\programs\guitar tuner\gui.h
 
-1552486042 source:c:\users\david\documents\programs\guitar tuner\tonegenerator.c
+1552488902 source:c:\users\david\documents\programs\guitar tuner\tonegenerator.c
 	<windows.h>
 	<stdio.h>
 	<dos.h>
@@ -453,7 +453,9 @@
 	"resource.h"
 	<pthread.h>
 
-1552364680 source:c:\users\david\documents\programs\guitar tuner\tunings.c
+1552488231 source:c:\users\david\documents\programs\guitar tuner\tunings.c
+	"tunings.h"
+	<stddef.h>
 
 1552485189 source:c:\users\david\documents\programs\guitar tuner\resources.rc
 	<windows.h>
