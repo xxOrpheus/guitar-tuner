@@ -16,7 +16,6 @@
 #define ID_PLAY_1                               40007
 #define ID_CYCLEPREV                            40008
 #define ID_CYCLENEXT                            40009
-#define ID_BANNER                               40010
 #define ID_FREQ_6                               40011
 #define ID_FREQ_5                               40012
 #define ID_FREQ_4                               40013
@@ -33,6 +32,9 @@
 #define ID_ABOUT                                40024
 #define ID_TONE_LENGTH                          40025
 #define ID_TIME_MS                              40026
+#define ID_APP_ICON                             40027
+#define ID_SET_TUNING                           40028
+#define ID_APP_LOGO                             40029
 #define AUDIO_VOLUME 127
 #define AUDIO_FREQ 48000
 #define AUDIO_SAMPLES 4096

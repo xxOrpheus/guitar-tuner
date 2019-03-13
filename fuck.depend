@@ -401,3 +401,63 @@
 
 1552464234 c:\users\david\documents\programs\fuck\main.h
 
+1552476265 source:c:\users\david\documents\programs\guitar tuner\gui.c
+	<windows.h>
+	<stdio.h>
+	<dos.h>
+	"resource.h"
+	<SDL.h>
+	<SDL_audio.h>
+	<math.h>
+	<sys/types.h>
+	<unistd.h>
+	<errno.h>
+	"tunings.h"
+	"main.h"
+	"commctrl.h"
+	<pthread.h>
+
+1552473964 c:\users\david\documents\programs\guitar tuner\resource.h
+
+1552466410 c:\users\david\documents\programs\guitar tuner\tunings.h
+
+1552472061 c:\users\david\documents\programs\guitar tuner\main.h
+
+1552472038 source:c:\users\david\documents\programs\guitar tuner\main.c
+	<windows.h>
+	<stdio.h>
+	<dos.h>
+	"resource.h"
+	<SDL.h>
+	<SDL_audio.h>
+	<math.h>
+	<sys/types.h>
+	<unistd.h>
+	<errno.h>
+	"tunings.h"
+	"GUI.h"
+	<pthread.h>
+
+1552465862 c:\users\david\documents\programs\guitar tuner\gui.h
+
+1552466913 source:c:\users\david\documents\programs\guitar tuner\tonegenerator.c
+	<windows.h>
+	<stdio.h>
+	<dos.h>
+	<SDL.h>
+	<SDL_audio.h>
+	<math.h>
+	<sys/types.h>
+	<unistd.h>
+	<errno.h>
+	"resource.h"
+	<pthread.h>
+
+1552364680 source:c:\users\david\documents\programs\guitar tuner\tunings.c
+
+1552473919 source:c:\users\david\documents\programs\guitar tuner\resources.rc
+	<windows.h>
+	<commctrl.h>
+	<richedit.h>
+	"resource.h"
+

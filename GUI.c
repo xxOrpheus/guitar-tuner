@@ -22,11 +22,43 @@ void* processGUI(void *arg)
     }
 }
 
+char* getText(HWND hwnd, int ctrlid)
+{
+    int buflen = GetWindowTextLength(GetDlgItem(hwnd, ctrlid));
+    if(buflen > 0)
+    {
+        int i;
+        char* buf;
+
+        buf = (char*)GlobalAlloc(GPTR, buflen + 1);
+        GetDlgItemText(hwnd, ctrlid, buf, buflen + 1);
+
+        //... do stuff with text ...
+        printf("%s \n", buf);
+        return buf;
+    }
+}
+
+
+float getFrequency(HWND hwnd, int ctrlid)
+{
+    char *e;
+    double freq;
+    freq = strtod(getText(hwnd, ctrlid), &e);
+    if(*e != '\0')
+    {
+        printf("bad frequency data\n");
+    }
+
+    return (float) freq;
+}
+
+
 INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
 {
     HWND textHwnd;
     HWND hwndTB;
-
+    tuning tune;
     switch(uMsg)
     {
     case WM_INITDIALOG:
@@ -50,7 +82,8 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
         int ctrlId = GetDlgCtrlID((HWND) lparam);
         int requestId = LOWORD(wParam);
         int pos = SendMessage((HWND) lparam, TBM_GETPOS, 0, 0);
-        switch(ctrlId) {
+        switch(ctrlId)
+        {
         case ID_TONE_LENGTH:
             toneLength = pos;
             char timeMs[64];
@@ -93,10 +126,12 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
 
         case ID_CYCLENEXT:
             cycleString += 1;
-            if(cycleString < 1) {
+            if(cycleString < 1)
+            {
                 cycleString = 1;
             }
-            if(cycleString > 6) {
+            if(cycleString > 6)
+            {
                 cycleString = 1;
             }
             printf("%d string \n", cycleString);
@@ -105,7 +140,8 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
 
         case ID_CYCLEPREV:
             cycleString -= 1;
-            if(cycleString < 1) {
+            if(cycleString < 1)
+            {
                 cycleString = 6;
             }
             currentString = cycleString;
@@ -130,8 +166,19 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
 
         case ID_STOP:
             currentString = -1;
-          //  loopPlayback = FALSE;
+            //  loopPlayback = FALSE;
             stopTone();
+            break;
+
+        case ID_SET_TUNING:
+            tune = getTuning();
+            tune.STRING_1_FREQ = getFrequency(hwnd, ID_FREQ_1);
+            tune.STRING_2_FREQ = getFrequency(hwnd, ID_FREQ_2);
+            tune.STRING_3_FREQ = getFrequency(hwnd, ID_FREQ_3);
+            tune.STRING_4_FREQ = getFrequency(hwnd, ID_FREQ_4);
+            tune.STRING_5_FREQ = getFrequency(hwnd, ID_FREQ_5);
+            tune.STRING_6_FREQ = getFrequency(hwnd, ID_FREQ_6);
+            setTuning(tune);
             break;
 
         case ID_EXIT:
