@@ -31,12 +31,18 @@ tuning currentTuning;
 
 int setTuning(tuning tune)
 {
+    int dialogId[] = {IDG_STRING_1, IDG_STRING_2, IDG_STRING_3, IDG_STRING_4, IDG_STRING_5, IDG_STRING_6};
     float freq[] = {tune.STRING_1_FREQ, tune.STRING_2_FREQ, tune.STRING_3_FREQ, tune.STRING_4_FREQ, tune.STRING_5_FREQ, tune.STRING_6_FREQ};
     int freqInput[] = {ID_FREQ_1, ID_FREQ_2, ID_FREQ_3, ID_FREQ_4, ID_FREQ_5, ID_FREQ_6};
 
     for(int i = 0; i < 6; i++)
     {
-        char freqs[64];
+        char out[16];
+        notationByFrequency(freq[i], &out, sizeof(out));
+        char caption[16];
+        sprintf(caption, "String %d - %s", i+1, out);
+        SetDlgItemText(hwnd, MAKEINTRESOURCE(dialogId[i]), caption);
+        char freqs[16];
         sprintf(freqs, "%.3f", freq[i]);
         SetDlgItemText(hwnd, MAKEINTRESOURCE(freqInput[i]), freqs);
     }
@@ -127,7 +133,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     dropDTuning.name = "Drop D";
     dropDTuning.STRING_6_FREQ /= 1.0595;
 
-    setTuning(eFlatTuning);
+    setTuning(standardTuning);
 
     while((ret = GetMessage(&Msg, NULL, 0, 0) > 0))
     {

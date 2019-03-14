@@ -6,12 +6,18 @@
 #define IDD_DIALOG1                             691
 #define IDR_MENU                                4200
 #define ID_FILE_EXIT                            4201
+#define IDG_STRING_6                            40000
 #define ID_STOP                                 40000
 #define ID_LOOP_PLAYBACK                        40001
+#define IDG_STRING_5                            40002
 #define ID_PLAY_6                               40002
+#define IDG_STRING_4                            40003
 #define ID_PLAY_5                               40003
+#define IDG_STRING_3                            40004
 #define ID_PLAY_4                               40004
+#define IDG_STRING_2                            40005
 #define ID_PLAY_3                               40005
+#define IDG_STRING_1                            40006
 #define ID_PLAY_2                               40006
 #define ID_PLAY_1                               40007
 #define ID_CYCLEPREV                            40008
@@ -32,7 +38,6 @@
 #define ID_ABOUT                                40024
 #define ID_TONE_LENGTH                          40025
 #define ID_TIME_MS                              40026
-#define ID_APP_ICON                             40027
 #define ID_SET_TUNING                           40028
 #define AUDIO_VOLUME 127
 #define AUDIO_FREQ 48000

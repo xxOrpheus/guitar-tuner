@@ -1,5 +1,7 @@
 #include "tunings.h"
 #include <stddef.h>
+#include <stdio.h>
+#include <math.h>
 
 float stepDown(float in) {
     return in / 1.0595;
@@ -9,7 +11,44 @@ float stepUp(float in) {
     return in * 1.0595;
 }
 
+
+float Log2(float n) {
+    return log(n) / log(2);
+}
+
+float* notes() {
+
+}
+
+int notationByFrequency(float freq, char* output, int bufferLength) {
+    float NOTE_A4 = 440;
+    float NOTE_C0 = NOTE_A4*pow(2, -4.75);
+
+    const char *name[12] = {
+        "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"
+    };
+
+    int h = round(12 * Log2(freq / NOTE_C0));
+    int octave = h / 12;
+    int n = (int)h % 12;
+    char out[16];
+    sprintf(out, "%s%d", name[n], octave);
+    strncpy(output, out, bufferLength - 1);
+    output[bufferLength-1] = '\0';
+
+    return 0;
+}
+
+int frequencyByNotation(char* note, char* buf, int bufLen) {
+    // tbc
+    return 0;
+}
+
 float *getFrequencies(tuning tune) {
+    float *ret = malloc(6);
+    if(!ret) {
+        return NULL;
+    }
     float freqs[] = {
         tune.STRING_1_FREQ,
         tune.STRING_2_FREQ,
@@ -18,8 +57,11 @@ float *getFrequencies(tuning tune) {
         tune.STRING_5_FREQ,
         tune.STRING_6_FREQ
     };
+    for(int i = 0; i < 6; i++) {
+        ret[i] = freqs[i];
+    }
 
-    return freqs;
+    return ret;
 }
 
 int setFrequencies(float freqs[], tuning tune) {

@@ -13,6 +13,9 @@
 #include "commctrl.h"
 #include <pthread.h>
 
+int stringDlgIds[6] = {ID_FREQ_1, ID_FREQ_2, ID_FREQ_3, ID_FREQ_4, ID_FREQ_5, ID_FREQ_6};
+int noteBoxDlgIds[6] = {ID_NOTE_1, ID_NOTE_2, ID_NOTE_3, ID_NOTE_4, ID_NOTE_5, ID_NOTE_6};
+
 void* processGUI(void *arg)
 {
     if(currentString > 0)
@@ -31,6 +34,38 @@ void* processGUI(void *arg)
             currentString = -1;
         }
     }
+}
+
+// generates a range of notes from 3 1/2 steps up and down, based from standard tuning
+int populateNoteTables(HWND hwnd)
+{
+    tuning tune = standardTuning;
+    float* notes = getFrequencies(tune);
+    for(int i = 0; i < 6; i++)
+    {
+        HWND list = GetDlgItem(hwnd, noteBoxDlgIds[i]);
+        float currentFreq = notes[i];
+        float originalFreq = currentFreq;
+        float freq = originalFreq;
+
+        int y; // move up seven half steps (three and 1/2 half steps) (extra half (8) to compensate for original note being counted)
+        for(y = 0; y < 8; y++) {
+            freq = stepUp(freq);
+        }
+
+        for(y = 0; y < 15; y++) {
+            freq = stepDown(freq);
+            char *str[16];
+            char name[16];
+            notationByFrequency(freq, name, 16);
+            sprintf(str, "%s \[%.2f\]", name, freq);
+            int pos = (int) SendMessage(list, LB_ADDSTRING, 0, (LPARAM) str);
+            SendMessage(list, LB_SETITEMDATA, pos, (LPARAM) freq);
+        }
+        currentFreq = originalFreq;
+
+    }
+    return 0;
 }
 
 char* getText(HWND hwnd, int ctrlid)
@@ -74,6 +109,7 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
     case WM_INITDIALOG:
         hwndTB = GetDlgItem(hwnd, ID_TONE_LENGTH);
         SendMessage(hwndTB, TBM_SETRANGE, TRUE, MAKELONG(1000, 5000));
+        populateNoteTables(hwnd);
         break;
 
     case WM_NCHITTEST:

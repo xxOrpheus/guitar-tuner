@@ -401,7 +401,7 @@
 
 1552464234 c:\users\david\documents\programs\fuck\main.h
 
-1552489223 source:c:\users\david\documents\programs\guitar tuner\gui.c
+1552568941 source:c:\users\david\documents\programs\guitar tuner\gui.c
 	<windows.h>
 	<stdio.h>
 	<dos.h>
@@ -417,13 +417,13 @@
 	"commctrl.h"
 	<pthread.h>
 
-1552484453 c:\users\david\documents\programs\guitar tuner\resource.h
+1552556615 c:\users\david\documents\programs\guitar tuner\resource.h
 
-1552487562 c:\users\david\documents\programs\guitar tuner\tunings.h
+1552567162 c:\users\david\documents\programs\guitar tuner\tunings.h
 
 1552472061 c:\users\david\documents\programs\guitar tuner\main.h
 
-1552488767 source:c:\users\david\documents\programs\guitar tuner\main.c
+1552567484 source:c:\users\david\documents\programs\guitar tuner\main.c
 	<windows.h>
 	<stdio.h>
 	<dos.h>
@@ -453,11 +453,13 @@
 	"resource.h"
 	<pthread.h>
 
-1552488231 source:c:\users\david\documents\programs\guitar tuner\tunings.c
+1552566781 source:c:\users\david\documents\programs\guitar tuner\tunings.c
 	"tunings.h"
 	<stddef.h>
+	<stdio.h>
+	<math.h>
 
-1552485189 source:c:\users\david\documents\programs\guitar tuner\resources.rc
+1552567543 source:c:\users\david\documents\programs\guitar tuner\resources.rc
 	<windows.h>
 	<commctrl.h>
 	<richedit.h>
