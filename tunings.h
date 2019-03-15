@@ -16,5 +16,5 @@ tuning eFlatTuning;
 int notationByFrequency(float freq, char* output, int bufferLength);
 int frequencyByNotation(char* note, char* buf, int bufLen);
 float *getFrequencies(tuning tune);
-float stepDown(float in);
-float stepUp(float in);
+float halfStepDown(float in);
+float halfStepUp(float in);

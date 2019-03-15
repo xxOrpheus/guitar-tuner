@@ -16,6 +16,21 @@
 int stringDlgIds[6] = {ID_FREQ_1, ID_FREQ_2, ID_FREQ_3, ID_FREQ_4, ID_FREQ_5, ID_FREQ_6};
 int noteBoxDlgIds[6] = {ID_NOTE_1, ID_NOTE_2, ID_NOTE_3, ID_NOTE_4, ID_NOTE_5, ID_NOTE_6};
 
+int getInput(int id)
+{
+    switch(id)
+    {
+        case ID_NOTE_1: return ID_FREQ_1;
+        case ID_NOTE_2: return ID_FREQ_2;
+        case ID_NOTE_3: return ID_FREQ_3;
+        case ID_NOTE_4: return ID_FREQ_4;
+        case ID_NOTE_5: return ID_FREQ_5;
+        case ID_NOTE_6: return ID_FREQ_6;
+    }
+
+    return 0;
+}
+
 void* processGUI(void *arg)
 {
     if(currentString > 0)
@@ -49,19 +64,23 @@ int populateNoteTables(HWND hwnd)
         float freq = originalFreq;
 
         int y; // move up seven half steps (three and 1/2 half steps) (extra half (8) to compensate for original note being counted)
-        for(y = 0; y < 8; y++) {
-            freq = stepUp(freq);
+        for(y = 0; y < 8; y++)
+        {
+            freq = halfStepUp(freq);
         }
-
-        for(y = 0; y < 15; y++) {
-            freq = stepDown(freq);
+        int pos;
+        for(y = 0; y < 15; y++)
+        {
+            freq = halfStepDown(freq);
             char *str[16];
             char name[16];
             notationByFrequency(freq, name, 16);
-            sprintf(str, "%s \[%.2f\]", name, freq);
-            int pos = (int) SendMessage(list, LB_ADDSTRING, 0, (LPARAM) str);
-            SendMessage(list, LB_SETITEMDATA, pos, (LPARAM) freq);
+            sprintf(str, "%s \[%.3f\]", name, freq);
+            pos = (int) SendMessage(list, LB_ADDSTRING, 0, (LPARAM) str);
+            SendMessage(list, LB_SETITEMDATA, pos, freq*1000);
+            //  printf("a %.2f\n", freq);
         }
+        printf("%.3f \n", (float)SendMessage(list, LB_GETITEMDATA, pos, NULL)/1000);
         currentFreq = originalFreq;
 
     }
@@ -103,6 +122,7 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
 {
     HWND textHwnd;
     HWND hwndTB;
+    int i;
     tuning tune;
     switch(uMsg)
     {
@@ -149,6 +169,24 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
 
         switch(LOWORD(wParam))
         {
+        case ID_NOTE_1:
+        case ID_NOTE_2:
+        case ID_NOTE_3:
+        case ID_NOTE_4:
+        case ID_NOTE_5:
+        case ID_NOTE_6:
+            switch(HIWORD(wParam))
+            {
+            case LBN_SELCHANGE:
+                hwndTB = GetDlgItem(hwnd, LOWORD(wParam));
+                i = SendMessage(hwndTB, LB_GETCURSEL, 0, 0);
+                float frewq = (float) SendMessage(hwndTB, LB_GETITEMDATA, i, 0) / 1000;
+                char str[16];
+                sprintf(str, "%.3f", frewq);
+                SetDlgItemText(hwnd, getInput(LOWORD(wParam)), str);
+                break;
+            }
+            break;
         case ID_PLAY_1:
             currentString = 1;
             break;

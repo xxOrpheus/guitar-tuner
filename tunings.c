@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <math.h>
 
-float stepDown(float in) {
+float halfStepDown(float in) {
     return in / 1.0595;
 }
 
-float stepUp(float in) {
+float halfStepUp(float in) {
     return in * 1.0595;
 }
 
