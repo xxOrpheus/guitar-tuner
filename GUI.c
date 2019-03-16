@@ -14,6 +14,7 @@
 #include "tunings.h"
 #include "tonegenerator.h"
 #include "resource.h"
+#include "version.h"
 
 int noteBoxDlgIds[6] = {ID_NOTE_1, ID_NOTE_2, ID_NOTE_3, ID_NOTE_4, ID_NOTE_5, ID_NOTE_6};
 pthread_t toneThread;
@@ -45,10 +46,11 @@ void* playTone(void *arg)
     while(currentString > 0)
     {
         generateTone(stringNoToFreq(currentString), toneLength);
-        Sleep(1000);
         if(!loopPlayback)
         {
             currentString = 0;
+        } else {
+            Sleep(1000);
         }
     }
     state = 0;
@@ -275,7 +277,9 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
 
         case ID_ABOUT:
             MessageBeep(0);
-            MessageBox(hwnd, "Made by David Harris", "Guitar Tuner v 1.0", MB_ICONQUESTION | MB_OK);
+            char about[16];
+            sprintf(about, "Tuner App v %s", FULLVERSION_STRING);
+            MessageBox(hwnd, "Made by David Harris", about, MB_ICONQUESTION | MB_OK);
             break;
         }
 

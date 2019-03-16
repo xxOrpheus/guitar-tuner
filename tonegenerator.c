@@ -8,18 +8,17 @@
 #include <unistd.h>
 #include <errno.h>
 #include "resource.h"
-#include <pthread.h>
 
 float sinPos;
 float sinStep;
-long frequency = 0;
-int length = 5000;
+
 void populate(void* data, Uint8 *stream, int len)
 {
+
     int i = 0;
     for(i = 0; i < len; i++)
     {
-        stream[i] = (Uint8) (AUDIO_VOLUME * sinf(sinPos)) + 127;
+        stream[i] = (Uint8) (127 * sinf(sinPos)) + 127;
         sinPos += sinStep;
     }
 }
@@ -28,10 +27,10 @@ int generateTone(float freq, int len)
 {
 
     SDL_AudioSpec spec;
-    spec.freq = AUDIO_FREQ;
+    spec.freq = 48000;
     spec.format = AUDIO_U8;
     spec.channels = 2;
-    spec.samples = AUDIO_SAMPLES;
+    spec.samples = 8192;
     spec.callback = (*populate);
     spec.userdata = NULL;
 
@@ -42,7 +41,7 @@ int generateTone(float freq, int len)
     }
 
     sinPos = 0;
-    sinStep = 2 * M_PI * freq / AUDIO_FREQ;
+    sinStep = 2 * M_PI * freq / 48000;
 
     SDL_PauseAudio(0);
     Sleep(len);

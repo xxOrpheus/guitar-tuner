@@ -18,6 +18,7 @@ float Log2(float n) {
     return log(n) / log(2);
 }
 
+//https://www.johndcook.com/blog/2016/02/10/musical-pitch-notation/
 int notationByFrequency(float freq, char output[16], int bufferLength) {
     float NOTE_A4 = 440;
     float NOTE_C0 = NOTE_A4*pow(2, -4.75);
