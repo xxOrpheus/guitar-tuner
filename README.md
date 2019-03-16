@@ -1,1 +1,1 @@
-# guitar tuner
+# guitar tuner / tone generator
