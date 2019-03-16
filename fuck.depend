@@ -401,46 +401,47 @@
 
 1552464234 c:\users\david\documents\programs\fuck\main.h
 
-1552657063 source:c:\users\david\documents\programs\guitar tuner\gui.c
+1552740870 source:c:\users\david\documents\programs\guitar tuner\gui.c
 	<windows.h>
 	<stdio.h>
 	<dos.h>
-	"resource.h"
+	<unistd.h>
+	<math.h>
+	<errno.h>
+	<pthread.h>
 	<SDL.h>
 	<SDL_audio.h>
-	<math.h>
 	<sys/types.h>
-	<unistd.h>
-	<errno.h>
-	"tunings.h"
-	"main.h"
 	"commctrl.h"
-	<pthread.h>
+	"main.h"
+	"tunings.h"
+	"tonegenerator.h"
+	"resource.h"
 
 1552556615 c:\users\david\documents\programs\guitar tuner\resource.h
 
-1552634258 c:\users\david\documents\programs\guitar tuner\tunings.h
+1552741243 c:\users\david\documents\programs\guitar tuner\tunings.h
 
-1552472061 c:\users\david\documents\programs\guitar tuner\main.h
+1552740068 c:\users\david\documents\programs\guitar tuner\main.h
 
-1552567484 source:c:\users\david\documents\programs\guitar tuner\main.c
+1552741688 source:c:\users\david\documents\programs\guitar tuner\main.c
 	<windows.h>
 	<stdio.h>
 	<dos.h>
-	"resource.h"
-	<SDL.h>
-	<SDL_audio.h>
 	<math.h>
 	<sys/types.h>
 	<unistd.h>
 	<errno.h>
+	<pthread.h>
+	<SDL.h>
+	<SDL_audio.h>
 	"tunings.h"
 	"GUI.h"
-	<pthread.h>
+	"resource.h"
 
-1552465862 c:\users\david\documents\programs\guitar tuner\gui.h
+1552739697 c:\users\david\documents\programs\guitar tuner\gui.h
 
-1552488902 source:c:\users\david\documents\programs\guitar tuner\tonegenerator.c
+1552738290 source:c:\users\david\documents\programs\guitar tuner\tonegenerator.c
 	<windows.h>
 	<stdio.h>
 	<dos.h>
@@ -453,15 +454,19 @@
 	"resource.h"
 	<pthread.h>
 
-1552634272 source:c:\users\david\documents\programs\guitar tuner\tunings.c
+1552741233 source:c:\users\david\documents\programs\guitar tuner\tunings.c
 	"tunings.h"
 	<stddef.h>
 	<stdio.h>
+	"string.h"
 	<math.h>
+	"stdlib.h"
 
 1552567543 source:c:\users\david\documents\programs\guitar tuner\resources.rc
 	<windows.h>
 	<commctrl.h>
 	<richedit.h>
 	"resource.h"
+
+1552739533 c:\users\david\documents\programs\guitar tuner\tonegenerator.h
 

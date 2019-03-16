@@ -24,7 +24,7 @@ void populate(void* data, Uint8 *stream, int len)
     }
 }
 
-int generateTone(long freq, int len)
+int generateTone(float freq, int len)
 {
 
     SDL_AudioSpec spec;
@@ -38,6 +38,7 @@ int generateTone(long freq, int len)
     if(SDL_OpenAudio(&spec, NULL) < 0)
     {
         printf("SDL Error: %s \n", SDL_GetError());
+        return 1;
     }
 
     sinPos = 0;
@@ -52,6 +53,8 @@ int generateTone(long freq, int len)
 
 int stopTone()
 {
+//    SDL_PauseAudio(1);
     SDL_CloseAudio();
+ //   Sleep(500);
     return 0;
 }

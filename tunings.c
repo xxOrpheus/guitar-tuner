@@ -1,7 +1,9 @@
 #include "tunings.h"
 #include <stddef.h>
 #include <stdio.h>
+#include "string.h"
 #include <math.h>
+#include "stdlib.h"
 
 float halfStepDown(float in) {
     return in / 1.0595;
@@ -16,11 +18,7 @@ float Log2(float n) {
     return log(n) / log(2);
 }
 
-float* notes() {
-
-}
-
-int notationByFrequency(float freq, char* output, int bufferLength) {
+int notationByFrequency(float freq, char output[16], int bufferLength) {
     float NOTE_A4 = 440;
     float NOTE_C0 = NOTE_A4*pow(2, -4.75);
 
@@ -64,18 +62,17 @@ float *getFrequencies(tuning tune) {
     return ret;
 }
 
-int setFrequencies(float freqs[], tuning tune) {
-    size_t sz = sizeof(freqs) / sizeof(freqs[0]);
-    if(sz != 6) {
-        return -1;
-    }
+tuning newTuning(float freqs[6], char* name) {
+    tuning tune;
+    tune.name = name;
     tune.STRING_1_FREQ = freqs[0];
     tune.STRING_2_FREQ = freqs[1];
     tune.STRING_3_FREQ = freqs[2];
     tune.STRING_4_FREQ = freqs[3];
     tune.STRING_5_FREQ = freqs[4];
     tune.STRING_6_FREQ = freqs[5];
-    return 0;
+
+    return tune;
 }
 
 tuning standardTuning =

@@ -13,7 +13,10 @@ tuning standardTuning;
 tuning dropDTuning;
 tuning eFlatTuning;
 
-int notationByFrequency(float freq, char* output, int bufferLength);
+tuning newTuning(float freqs[6], char* name);
+int setTuning(tuning tune);
+
+int notationByFrequency(float freq, char output[16], int bufferLength);
 int frequencyByNotation(char* note, char* buf, int bufLen);
 float *getFrequencies(tuning tune);
 float halfStepDown(float in);

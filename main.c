@@ -1,16 +1,16 @@
 #include <windows.h>
 #include <stdio.h>
 #include <dos.h>
-#include "resource.h"
-#include <SDL.h>
-#include <SDL_audio.h>
 #include <math.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <errno.h>
+#include <pthread.h>
+#include <SDL.h>
+#include <SDL_audio.h>
 #include "tunings.h"
 #include "GUI.h"
-#include <pthread.h>
+#include "resource.h"
 
 // uses code from https://github.com/psycotica0/tone-generator/blob/master/generator.c#L11
 // thank you friendo :)
@@ -25,6 +25,7 @@ BOOL ret;
 int currentString = -1;
 int cycleString = -1;
 int toneLength = 1000;
+int state = 0;
 BOOL loopPlayback = FALSE;
 
 tuning currentTuning;
@@ -41,10 +42,10 @@ int setTuning(tuning tune)
         notationByFrequency(freq[i], &out, sizeof(out));
         char caption[16];
         sprintf(caption, "String %d - %s", i+1, out);
-        SetDlgItemText(hwnd, MAKEINTRESOURCE(dialogId[i]), caption);
+        SetDlgItemText(hwnd, dialogId[i], caption);
         char freqs[16];
         sprintf(freqs, "%.3f", freq[i]);
-        SetDlgItemText(hwnd, MAKEINTRESOURCE(freqInput[i]), freqs);
+        SetDlgItemText(hwnd, freqInput[i], freqs);
     }
 
     currentTuning = tune;
