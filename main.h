@@ -1,7 +1,8 @@
 struct tuning getTuning();
+struct tuning currentTuning;
 int currentString;
 int cycleString;
 int toneLength;
 int state;
 BOOL loopPlayback;
-int stringNoToFreq(int stringNo);
+float stringNoToFreq(int stringNo);

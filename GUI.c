@@ -49,7 +49,9 @@ void* playTone(void *arg)
         if(!loopPlayback)
         {
             currentString = 0;
-        } else {
+        }
+        else
+        {
             Sleep(1000);
         }
     }
@@ -69,6 +71,28 @@ int processGUI()
     return 0;
 }
 
+int populateTuningList(HWND hwnd)
+{
+    HWND list = GetDlgItem(hwnd, IDLB_TUNING);
+    int pos;
+    int tuningPos;
+    tuning currentTune = getTuning();
+    for(int i = 0; i < tuneCount; i++)
+    {
+        char str[16];
+        tuning tune;
+        getTuning_byId(i, &tune);
+        sprintf(str, "%s", tune.name);
+        pos = SendMessage(list, LB_ADDSTRING, 0, (LPARAM) str);
+        SendMessage(list, LB_SETITEMDATA, pos, i);
+        if(tune.name == currentTune.name)
+        {
+            tuningPos = pos;
+            SendMessage(list, LB_SETCURSEL, (WPARAM) pos, (LPARAM) 0);
+        }
+    }
+}
+
 // generates a range of notes from 3 1/2 steps up and down, based from standard tuning
 int populateNoteTables(HWND hwnd)
 {
@@ -86,6 +110,7 @@ int populateNoteTables(HWND hwnd)
             freq = halfStepUp(freq);
         }
         int pos;
+        int originalFreqPos;
         for(y = 0; y < 15; y++)
         {
             freq = halfStepDown(freq);
@@ -94,9 +119,14 @@ int populateNoteTables(HWND hwnd)
             notationByFrequency(freq, name, 16);
             sprintf(str, "%s [%.3f]", name, freq);
             pos = (int) SendMessage(list, LB_ADDSTRING, 0, (LPARAM) str);
+            if(freq == originalFreq)
+            {
+                originalFreqPos = pos;
+            }
             SendMessage(list, LB_SETITEMDATA, pos, freq*1000);
         }
-        printf("%.3f \n", (float)SendMessage(list, LB_GETITEMDATA, pos, 0)/1000);
+        SendMessage(list, LB_SETCURSEL, (WPARAM) originalFreqPos, (LPARAM) 0);
+        //  printf("%.3f \n", (float)SendMessage(list, LB_GETITEMDATA, pos, 0)/1000);
         currentFreq = originalFreq;
 
     }
@@ -136,7 +166,6 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
 {
     HWND itemHwnd;
     int i;
-    tuning tune;
 
     switch(uMsg)
     {
@@ -144,6 +173,7 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
         itemHwnd = GetDlgItem(hwnd, ID_TONE_LENGTH);
         SendMessage(itemHwnd, TBM_SETRANGE, TRUE, MAKELONG(1000, 5000));
         populateNoteTables(hwnd);
+        populateTuningList(hwnd);
         break;
 
     case WM_NCHITTEST:
@@ -201,6 +231,18 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
             }
             break;
 
+            case IDLB_TUNING:
+                switch(HIWORD(wParam)) {
+                case LBN_SELCHANGE:
+                    itemHwnd = GetDlgItem(hwnd, LOWORD(wParam));
+                    i = SendMessage(itemHwnd, LB_GETCURSEL, 0, 0);
+                    int x = (int) SendMessage(itemHwnd, LB_GETITEMDATA, i, 0);
+                    tuning tune;
+                    getTuning_byId(x, &tune);
+                    setTuning(tune);
+                }
+                break;
+
         case ID_PLAY_1:
             currentString = 1;
             break;
@@ -208,14 +250,16 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
         case ID_PLAY_2:
             currentString = 2;
             break;
-        case ID_PLAY_3:
+
+        case ID_PLAY_3:
             currentString = 3;
             break;
 
         case ID_PLAY_4:
             currentString = 4;
             break;
-        case ID_PLAY_5:
+
+        case ID_PLAY_5:
             currentString = 5;
             break;
 
@@ -257,9 +301,10 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
             break;
 
         case ID_SET_TUNING:
-            tune = standardTuning;
-            float freqs[6] =
+            currentString = currentString; //cant have declaration directly after label so yea i put this here
+            tuning tune =
             {
+                "user defined",
                 getFrequencyFromInput(hwnd, ID_FREQ_1),
                 getFrequencyFromInput(hwnd, ID_FREQ_2),
                 getFrequencyFromInput(hwnd, ID_FREQ_3),
@@ -267,7 +312,6 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lparam)
                 getFrequencyFromInput(hwnd, ID_FREQ_5),
                 getFrequencyFromInput(hwnd, ID_FREQ_6)
             };
-            tune = newTuning(freqs, "user defined");
             setTuning(tune);
             break;
 

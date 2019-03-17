@@ -13,8 +13,15 @@ tuning standardTuning;
 tuning dropDTuning;
 tuning eFlatTuning;
 
-tuning newTuning(float freqs[6], char* name);
+int newTuning(float freqs[6], char* name);
+int newTuning_byPointer(tuning tune);
+int tuneCount;
+int tune_count();
+tuning tunes[32];
+int getTuning_byId(int i, tuning* tune);
 int setTuning(tuning tune);
+
+
 
 int notationByFrequency(float freq, char output[16], int bufferLength);
 int frequencyByNotation(char* note, char* buf, int bufLen);

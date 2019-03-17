@@ -63,7 +63,26 @@ float *getFrequencies(tuning tune) {
     return ret;
 }
 
-tuning newTuning(float freqs[6], char* name) {
+tuning tunes[32];
+int tuneCount = 0;
+
+int newTuning_byPointer(tuning tune) {
+   // printf("%s %d\n", tune.name, tune_count());
+tunes[tuneCount] = tune;
+tuneCount = tuneCount + 1;
+return tuneCount;
+}
+
+int tune_count() {
+    return tuneCount;
+}
+
+int getTuning_byId(int i, tuning* tune) {
+    *tune = tunes[i];
+    return 0;
+}
+
+int newTuning(float freqs[6], char* name) { // using a wrapper so we can keep track of all tunings
     tuning tune;
     tune.name = name;
     tune.STRING_1_FREQ = freqs[0];
@@ -72,9 +91,12 @@ tuning newTuning(float freqs[6], char* name) {
     tune.STRING_4_FREQ = freqs[3];
     tune.STRING_5_FREQ = freqs[4];
     tune.STRING_6_FREQ = freqs[5];
+    tunes[tuneCount] = tune;
+tuneCount = tuneCount + 1;
 
-    return tune;
+    return tuneCount;
 }
+
 
 tuning standardTuning =
 {

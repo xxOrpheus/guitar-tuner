@@ -28,7 +28,7 @@ int toneLength = 1000;
 int state = 0;
 BOOL loopPlayback = FALSE;
 
-tuning currentTuning;
+struct tuning currentTuning;
 
 int setTuning(tuning tune)
 {
@@ -46,6 +46,9 @@ int setTuning(tuning tune)
         char freqs[16];
         sprintf(freqs, "%.3f", freq[i]);
         SetDlgItemText(hwnd, freqInput[i], freqs);
+
+        HWND listHwnd = GetDlgItem(hwnd, noteBoxDlgIds[i]);
+        SendMessage(listHwnd, LB_SELECTSTRING, (WPARAM) 0, (LPARAM) out);
     }
 
     currentTuning = tune;
@@ -57,7 +60,7 @@ tuning getTuning()
     return currentTuning;
 }
 
-long stringNoToFreq(int stringNo)
+float stringNoToFreq(int stringNo)
 {
     switch(stringNo)
     {
@@ -119,6 +122,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
     }
 
+    setTuning(standardTuning);
+
+    dropDTuning = standardTuning;
+    dropDTuning.name = "Drop D";
+    dropDTuning.STRING_6_FREQ /= 1.0595;
+
+    newTuning_byPointer(standardTuning);
+    newTuning_byPointer(eFlatTuning);
+    newTuning_byPointer(dropDTuning);
+
     hwnd = CreateDialogParam(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), 0, DialogProc, 0);
 
     if(hwnd == NULL)
@@ -130,12 +143,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     ShowWindow(hwnd, nCmdShow);
     UpdateWindow(hwnd);
 
-    dropDTuning = standardTuning;
-    dropDTuning.name = "Drop D";
-    dropDTuning.STRING_6_FREQ /= 1.0595;
-
     setTuning(standardTuning);
-
     while((ret = GetMessage(&Msg, NULL, 0, 0) > 0))
     {
         if(ret == -1)
